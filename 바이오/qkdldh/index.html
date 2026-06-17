@@ -1,0 +1,1430 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscotec - Beyond Discovery, Toward Cure</title>
+    <style>
+        /* 폰트 설정 (Pretendard) */
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            animation: pageFadeIn 0.6s ease-out forwards;
+            font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* 1. 상단 GNB (Header) 영역 */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            z-index: 1000;
+            background-color: transparent;
+            transition: background-color 0.4s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .site-header.scrolled,
+        .site-header:hover {
+            background-color: rgba(13, 2, 20, 0.85);
+            border-bottom-color: transparent;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            height: 100%;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .logo-symbol {
+            font-weight: 900;
+            font-style: italic;
+            font-size: 28px;
+            letter-spacing: -1px;
+        }
+
+        .logo-divider {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            font-size: 20px;
+            margin: 0 4px;
+        }
+
+        .gnb ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .gnb a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            padding: 10px 0;
+            transition: color 0.3s ease;
+        }
+
+        .gnb a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background-color: #ffffff;
+            transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .gnb a:hover {
+            color: #e0e0e0;
+        }
+
+        .gnb a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+            transition: 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* 2. 메인 비주얼 (Hero Section) 영역 */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 800px;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(20, 5, 30, 0.4);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 30%;
+            right: 8%;
+            text-align: right;
+            z-index: 3;
+        }
+
+        .hero-title {
+            font-size: 4vw;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        /* 
+         ========================================
+         3. 코어 메시지 섹션 (Frame 3)
+         ========================================
+        */
+        .core-message-section {
+            background-color: #ffffff;
+            /* 흰색 배경 */
+            color: #000;
+            /* 검정색 텍스트 */
+            padding: 250px 0;
+            /* 위아래 넉넉한 여백 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            /* 가로 스크롤 방지 및 막대 넘침 방지 */
+        }
+
+        .message-container {
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 텍스트 중앙 정렬 */
+            gap: 20px;
+        }
+
+        /* 텍스트 줄 래퍼 */
+        .text-line-wrapper {
+            position: relative;
+            text-align: center;
+            font-size: 86px;
+            /* 더 크고 굵은 Black 폰트 */
+            font-weight: 900;
+            line-height: 1.4;
+            letter-spacing: -0.02em;
+            z-index: 2;
+        }
+
+        /* 애니메이션을 위해 텍스트 내부를 감싸는 span */
+        .text-inner {
+            display: inline-block;
+            opacity: 0;
+            /* 초기 숨김 */
+            transform: translateY(50px);
+            /* 아래에서 위로 등장 준비 */
+        }
+
+        /* 포인트 컬러 텍스트 (핑크) */
+        .point-text {
+            color: #ff2a6d;
+            /* 시안과 동일한 핫핑크 */
+            position: relative;
+            display: inline-block;
+            transition: text-shadow 0.5s ease-out;
+        }
+
+        /* 마이크로 인터랙션 (Glow) */
+        .point-text.glow {
+            animation: textGlow 0.6s ease-out forwards;
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow: none;
+            }
+
+            50% {
+                text-shadow: 0 0 25px rgba(255, 42, 109, 0.8), 0 0 45px rgba(255, 42, 109, 0.4);
+            }
+
+            100% {
+                text-shadow: none;
+            }
+        }
+
+        /* 텍스트 뒤 보라색 띠 레이어 (HTML DOM 활용) */
+        .bg-bar-wrap {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .bg-bar-shape {
+            position: absolute;
+            top: 55%;
+            /* 텍스트 하단부에 걸치도록 */
+            height: 55%;
+            background-color: rgba(131, 59, 92, 0.9);
+            /* 자주색/보라색 반투명 */
+            z-index: -1;
+            transform-origin: left center;
+            /* 무조건 왼쪽에서 오른쪽으로 길어지게 */
+            transform: translateY(-50%) scaleX(0);
+            /* 스케일 0으로 시작 */
+        }
+
+        /* 첫 번째 줄 바: 화면 왼쪽 끝에서부터 늘어남 */
+        .bar-left {
+            left: -100vw;
+            width: calc(100vw + 100%);
+        }
+
+        /* 두 번째 줄 바: 텍스트 너비만큼만 늘어남 */
+        .bar-center {
+            left: 0;
+            width: 100%;
+        }
+
+        /* 세 번째 줄 바: 텍스트 시작점부터 화면 오른쪽 끝까지 늘어남 */
+        .bar-right {
+            left: 0;
+            width: 100vw;
+        }
+
+        /* 
+         ========================================
+         4. 파이프라인 캐러셀 섹션 (이미지 크로스페이드)
+         ========================================
+        */
+        .carousel-section {
+            background-color: #fff;
+            /* 시안 배경색 */
+            padding: 100px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* 비율 유지를 위한 투명 더미 이미지 */
+        .dummy-img {
+            width: 100%;
+            height: auto;
+            visibility: hidden;
+            display: block;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 좌우 공백 없이 화면에 꽉 차게 변경 */
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            pointer-events: none;
+            /* 클릭 이벤트는 click-zone에서 받음 */
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* 양옆 카드 클릭 영역 (좌우 30%) */
+        .click-zone {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 30%;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .click-left {
+            left: 0;
+        }
+
+        .click-right {
+            right: 0;
+        }
+
+        /* 
+         ========================================
+         5. 파이프라인 인벤토리 섹션 (가로 스크롤 모션)
+         ========================================
+        */
+        .pin-spacer { background-color: #ffffff !important; }
+        .pipeline-section {}
+
+
+
+        .pipeline-wrapper {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            /* 세로 중앙 정렬 */
+            box-sizing: border-box;
+
+            height: 100vh;
+            padding-left: 10vw;
+            padding-right: 10vw;
+            width: max-content;
+        }
+
+        .pipe-slide-img {
+            flex-shrink: 0;
+            box-sizing: border-box;
+            width: auto;
+            height: 80vh;
+            max-height: 900px;
+            object-fit: contain;
+            margin-right: 5vw;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); /* 매우 연한 회색 그림자 */
+            border-radius: 20px; /* 자연스러운 카드 형태를 위해 */
+        }
+
+        .pipe-slide-img:last-child {
+            margin-right: 0;
+            /* 마지막 요소의 마진을 제거하고 부모의 padding-right로 균형 맞춤 */
+        }
+
+        /* 여백 확보용 Spacer 제거 (padding-right로 대체됨) */
+
+        /* 
+         ========================================
+         6. 반응형 (Media Query)
+         ========================================
+        */
+        @media (max-width: 1024px) {
+            .header-inner {
+                padding: 0 30px;
+            }
+
+            .gnb {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 38px;
+            }
+
+            .hero-content {
+                top: 25%;
+                right: 6%;
+            }
+
+            .text-line-wrapper {
+                font-size: 56px;
+            }
+        }
+
+        /* 
+         ========================================
+         7. IR & Performance 섹션
+         ========================================
+        */
+        .ir-section {
+            background-color: #e4dfe6;
+            /* 시안 배경색 추출 완벽 일치 */
+            padding: 150px 0;
+            width: 100%;
+            font-family: 'Pretendard Variable', Pretendard, sans-serif;
+        }
+
+        .ir-inner {
+            max-width: 1400px;
+            padding: 0 50px;
+            margin: 0 auto;
+            display: flex;
+            gap: 60px;
+            justify-content: space-between;
+            align-items: stretch;
+        }
+
+        /* 좌측 영역 */
+        .ir-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .ir-images {
+            display: flex;
+            gap: 20px;
+        }
+
+        .ir-img-card {
+            flex: 1;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            color: #523a54;
+            line-height: 1.3;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        .card1 {
+            background: linear-gradient(135deg, #f8f6fb, #d8d0df);
+        }
+
+        .card2 {
+            background: linear-gradient(135deg, #dcd4e2, #9b82a5);
+            color: #402c44;
+        }
+
+        .ir-title {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: #523a54;
+            /* 핫핑크 대신 시안과 동일한 딥퍼플 */
+            margin-top: 10px;
+        }
+
+        /* 우측 영역 (하나의 큰 박스) */
+        .ir-right-box {
+            flex: 1.1;
+            /* 우측이 살짝 더 넓음 */
+            background: #f4f2f5;
+            /* 시안과 동일한 박스 배경 */
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03);
+        }
+
+        /* 차트 영역 */
+        .chart-area {
+            width: 100%;
+            height: 240px;
+            position: relative;
+            border-bottom: 1px solid #73477D;
+            /* x축 강조를 위해 진한 선 */
+            margin-bottom: 10px;
+        }
+
+        .chart-y-axis {
+            position: absolute;
+            right: -50px;
+            top: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #a09ba5;
+            text-align: right;
+            padding-bottom: 5px;
+        }
+
+        .chart-grid {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .grid-line {
+            width: 100%;
+            height: 1px;
+            background-color: #dfdbdf;
+        }
+
+        .grid-line:last-child {
+            background-color: transparent;
+        }
+
+        .line-chart {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* 리스트 영역 */
+        .ir-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ir-list li {
+            border-bottom: 1px solid #dedadd;
+        }
+
+        .ir-list li:last-child {
+            border-bottom: none;
+        }
+
+        .ir-list li a {
+            display: flex;
+            align-items: center;
+            padding: 22px 0;
+            text-decoration: none;
+            color: #523a54;
+        }
+
+        .list-icon {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 60px;
+        }
+
+        .list-content {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .list-text {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .list-arrow {
+            font-size: 26px;
+            font-weight: 400;
+            transition: transform 0.3s ease;
+            color: #523a54;
+        }
+
+        .ir-list li a:hover .list-arrow {
+            transform: translateX(6px);
+        }
+
+        @media (max-width: 1024px) {
+            .ir-inner {
+                flex-direction: column;
+                gap: 80px;
+                align-items: stretch;
+            }
+
+            .ir-right-box {
+                max-width: 100%;
+                width: 100%;
+                padding: 40px 30px;
+            }
+
+            .ir-title {
+                font-size: 56px;
+            }
+
+            .chart-y-axis {
+                right: 0;
+                align-items: flex-end;
+            }
+
+            .chart-area {
+                padding-right: 40px;
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .ir-title {
+                font-size: 38px;
+            }
+
+            .ir-images {
+                flex-direction: column;
+            }
+
+            .ir-img-card {
+                aspect-ratio: 16/9;
+            }
+
+            .list-text {
+                font-size: 16px;
+            }
+        }
+
+        .ir-list li a {
+            font-size: 18px;
+            padding: 20px 0;
+        }
+
+        .ir-img-card {
+            width: 48%;
+        }
+
+        /* 
+         ========================================
+         8. Footer 푸터 섹션 (이미지 완벽 매칭)
+         ========================================
+        */
+        .footer {
+            background-color: #f0f0f0;
+            /* 밝은 회색 배경 */
+            color: #333;
+            padding: 80px 0;
+            font-family: 'Pretendard Variable', Pretendard, sans-serif;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            padding: 0 50px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        /* 1. 좌측: 로고 영역 */
+        .footer-logo {
+            flex: 1;
+            font-size: 40px;
+            font-weight: 700;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo .oct-logo {
+            color: #d3222a;
+            /* 시안 로고 레드 */
+            font-weight: 900;
+            letter-spacing: -2px;
+            display: flex;
+            position: relative;
+        }
+
+        .footer-logo .oct-logo .c-char {
+            position: relative;
+        }
+
+        .footer-logo .oct-logo .c-char::before,
+        .footer-logo .oct-logo .c-char::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            width: 5px;
+            height: 5px;
+            background-color: #d3222a;
+            border-radius: 50%;
+        }
+
+        .footer-logo .oct-logo .c-char::before {
+            left: 4px;
+        }
+
+        .footer-logo .oct-logo .c-char::after {
+            right: 2px;
+        }
+
+        .footer-logo .logo-divider {
+            color: #a0a0a0;
+            font-weight: 300;
+            margin: 0 5px;
+        }
+
+        /* 2. 중앙: 정보 영역 */
+        .footer-info {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 10px;
+        }
+
+        .footer-info h2 {
+            font-size: 26px;
+            font-weight: 900;
+            color: #111;
+            margin: 0 0 10px 0;
+        }
+
+        .address-box p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+        }
+
+        .policy-link {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            display: flex;
+            align-items: center;
+        }
+
+        .policy-link .bullet {
+            margin-right: 8px;
+            font-size: 12px;
+        }
+
+        /* Wipe 효과 유지 */
+        .wipe-link {
+            position: relative;
+            color: #111;
+            text-decoration: none;
+            padding-bottom: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .wipe-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #ff2a6d;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wipe-link:hover {
+            color: #ff2a6d;
+        }
+
+        .wipe-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* 3. 우측: 고객센터 영역 */
+        .footer-customer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-top: 10px;
+        }
+
+        .footer-customer h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111;
+            margin: 0 0 5px 0;
+            letter-spacing: 0.02em;
+        }
+
+        .footer-customer p {
+            font-size: 15px;
+            color: #555;
+            margin: 0 0 20px 0;
+        }
+
+        .customer-line {
+            width: 100%;
+            height: 1px;
+            background-color: #111;
+            border: none;
+            margin: 0 0 20px 0;
+        }
+
+        .sns-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .sns-link {
+            color: #111;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .sns-link svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sns-link:hover {
+            transform: scale(1.15) rotate(8deg);
+            color: #0077b5;
+        }
+
+        /* Top 버튼 */
+        .btn-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 52px;
+            height: 52px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s;
+            z-index: 99;
+        }
+
+        .btn-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .btn-top:hover {
+            animation: bounceTop 0.8s infinite ease-in-out;
+            background: #ff2a6d;
+        }
+
+        @keyframes bounceTop {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .footer-inner {
+                flex-direction: column;
+                gap: 60px;
+            }
+
+            .footer-info {
+                padding-top: 0;
+            }
+
+            .btn-top {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-logo {
+                font-size: 32px;
+            }
+
+            .footer-inner {
+                padding: 0 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. 상단 GNB 헤더 -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="#"><span class="logo-symbol">Oct</span><span class="logo-divider">|</span><span
+                        class="logo-text">Oscotec Inc.</span></a>
+            </div>
+            <nav class="gnb">
+                <ul>
+                    <li><a href="#">ABOUT</a></li>
+                    <li><a href="#">BUSINESS</a></li>
+                    <li><a href="#">PIPELINE</a></li>
+                    <li><a href="rnd.html">R&D</a></li>
+                    <li><a href="#">TECHNOLOGY</a></li>
+                    <li><a href="#">PARTNERSHIP</a></li>
+                    <li><a href="#">IR</a></li>
+                    <li><a href="#">PRESS</a></li>
+                    <li><a href="#">CAREER</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- 2. 메인 비주얼 영상 배경 섹션 -->
+    <section class="hero-section">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="Untitled_Scene_05-27_06_02_59_202606160018.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Beyond Discovery,<br>Toward Cure</h1>
+        </div>
+    </section>
+
+    <!-- 3. 코어 메시지 섹션 (Frame 3 시안 완벽 재현) -->
+    <section class="core-message-section">
+        <div class="message-container">
+
+            <!-- 첫 번째 줄: 혁신 신약 개발 역량 -->
+            <div class="text-line-wrapper">
+                <span class="text-inner">
+                    <span class="bg-bar-wrap">
+                        <span class="bg-bar-shape bar-left"></span>
+                        혁신 <span class="point-text">신약</span> 개발
+                    </span> 역량
+                </span>
+            </div>
+
+            <!-- 두 번째 줄: 표적 치료 기반 신약 연구를 통해 -->
+            <div class="text-line-wrapper">
+                <span class="text-inner">
+                    표적
+                    <span class="bg-bar-wrap point-text">
+                        <span class="bg-bar-shape bar-center"></span>
+                        치료 기반 신약
+                    </span>
+                    연구를 통해
+                </span>
+            </div>
+
+            <!-- 세 번째 줄: 차세대 치료제를 개발 -->
+            <div class="text-line-wrapper">
+                <span class="text-inner">
+                    차세대
+                    <span class="bg-bar-wrap">
+                        <span class="bg-bar-shape bar-right"></span>
+                        <span class="point-text">치료제</span>를 개발
+                    </span>
+                </span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. 파이프라인 캐러셀 섹션 (이미지 스왑 형태) -->
+    <section class="carousel-section">
+        <div class="carousel-container">
+            <!-- 컨테이너 비율 유지를 위한 투명 이미지 -->
+            <img src="Frame 4.png" class="dummy-img" alt="">
+
+            <!-- 실제 전환되는 3개의 이미지 슬라이드 -->
+            <img src="Frame 4.png" class="carousel-slide active" alt="Biologics">
+            <img src="Frame 5.png" class="carousel-slide" alt="Small Molecule">
+            <img src="Frame 6.png" class="carousel-slide" alt="Gene Therapy">
+
+            <!-- 투명한 클릭 영역 (마우스 인터랙션용) -->
+            <div class="click-zone click-left"></div>
+            <div class="click-zone click-right"></div>
+        </div>
+    </section>
+
+    <!-- 5. 파이프라인 인벤토리 섹션 (단순 가로 스크롤) -->
+    <section class="pipeline-section">
+        <!-- 가로로 스크롤되는 카드 컨테이너 -->
+        <div class="pipeline-container">
+            <div class="pipeline-wrapper">
+                <!-- Frame 7, 8, 9 차례로 나열 -->
+                <img src="Frame 7.png" class="pipe-slide-img" alt="Pipeline 1">
+                <img src="Frame 8.png" class="pipe-slide-img" alt="Pipeline 2">
+                <img src="Frame 9.png" class="pipe-slide-img" alt="Pipeline 3">
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 성과 및 IR/공시 섹션 (Frame 10 디자인 완벽 복원) -->
+    <section class="ir-section">
+        <div class="ir-inner">
+            <!-- 좌측: 카드 & 카피 -->
+            <div class="ir-left">
+                <div class="ir-images">
+                    <div class="ir-img-card card1">
+                        <div class="card-text">Sustainable<br>Future</div>
+                    </div>
+                    <div class="ir-img-card card2">
+                        <div class="card-text">Transparency<br>& Growth</div>
+                    </div>
+                </div>
+                <!-- 시안과 완벽 동일: 한 줄, 따옴표 포함, 색상 동일 -->
+                <h2 class="ir-title">“전년 대비 <span class="count-num">0</span>% 성장”</h2>
+            </div>
+
+            <!-- 우측: 차트 & 리스트 통합 박스 -->
+            <div class="ir-right-box">
+                <!-- 꺾은선 차트 -->
+                <div class="chart-area">
+                    <div class="chart-grid">
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+                    <div class="chart-y-axis">
+                        <span>1.600</span>
+                        <span>1.500</span>
+                        <span>1.400</span>
+                        <span>1.300</span>
+                        <span>1.200</span>
+                    </div>
+
+                    <svg viewBox="0 0 500 200" preserveAspectRatio="none" class="line-chart">
+                        <defs>
+                            <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#73477D" stop-opacity="0.6" />
+                                <stop offset="100%" stop-color="#73477D" stop-opacity="0" />
+                            </linearGradient>
+                            <clipPath id="chartClip">
+                                <rect x="0" y="200" width="500" height="0" class="gradient-clip" />
+                            </clipPath>
+                        </defs>
+                        <!-- 시안과 흡사한 디테일한 꺾은선 (봉우리 형태 일치) -->
+                        <path class="chart-fill"
+                            d="M0,130 L10,100 L30,60 L50,80 L70,90 L90,60 L110,110 L130,60 L150,80 L170,70 L190,50 L210,60 L230,50 L250,55 L270,30 L290,40 L310,30 L330,20 L350,25 L370,10 L390,25 L410,10 L430,30 L450,15 L470,35 L490,15 L500,25 L500,200 L0,200 Z"
+                            fill="url(#chartGradient)" clip-path="url(#chartClip)" />
+                        <!-- 선 두께 및 색상 시안 일치 -->
+                        <path class="chart-line"
+                            d="M0,130 L10,100 L30,60 L50,80 L70,90 L90,60 L110,110 L130,60 L150,80 L170,70 L190,50 L210,60 L230,50 L250,55 L270,30 L290,40 L310,30 L330,20 L350,25 L370,10 L390,25 L410,10 L430,30 L450,15 L470,35 L490,15 L500,25"
+                            fill="none" stroke="#73477D" stroke-width="3" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+
+                <!-- 하단 리스트 메뉴 -->
+                <ul class="ir-list">
+                    <li>
+                        <a href="#">
+                            <div class="list-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#523a54"
+                                    stroke-width="1.5">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <path d="M8 13h8M8 17h8"></path>
+                                </svg>
+                            </div>
+                            <div class="list-content">
+                                <span class="list-text">IR 자료실 / 실적 발표</span>
+                                <span class="list-arrow">›</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="list-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#523a54"
+                                    stroke-width="1.5">
+                                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                    <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                                    <rect x="14" y="14" width="4" height="6"></rect>
+                                    <rect x="19" y="10" width="4" height="10"></rect>
+                                </svg>
+                            </div>
+                            <div class="list-content">
+                                <span class="list-text">파이프라인별 연구개발 현황</span>
+                                <span class="list-arrow">›</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="list-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#523a54"
+                                    stroke-width="1.5">
+                                    <path
+                                        d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                    </path>
+                                    <rect x="10" y="12" width="4" height="5" rx="1"></rect>
+                                    <path d="M10 12v-2a2 2 0 1 1 4 0v2"></path>
+                                </svg>
+                            </div>
+                            <div class="list-content">
+                                <span class="list-text">주요 재무 상태 요약</span>
+                                <span class="list-arrow">›</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Footer (이미지 완벽 매칭) -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <!-- 1. 좌측: 로고 영역 -->
+            <div class="footer-logo">
+                <span class="oct-logo">O<span class="c-char">c</span>t</span>
+                <span class="logo-divider">|</span>
+                <span>Oscotec Inc.</span>
+            </div>
+
+            <!-- 2. 중앙: 기업 정보 영역 -->
+            <div class="footer-info">
+                <h2>오스코텍</h2>
+                <div class="address-box">
+                    <p>경기도 성남시 분당구 대왕판교로 700(삼평동)<br>코리아바이오파크 A동 9층</p>
+                    <p>대표 : 윤태영, 이상현 / 사업자등록번호 : 312-81-32175</p>
+                </div>
+                <div class="policy-link">
+                    <span class="bullet">•</span> <a href="#" class="wipe-link">개인정보처리방침 안내</a>
+                </div>
+            </div>
+
+            <!-- 3. 우측: 고객센터 영역 -->
+            <div class="footer-customer">
+                <h3>CUSTOMER CENTER</h3>
+                <p>메일주시면 확인 후 회신드립니다</p>
+                <hr class="customer-line">
+                <div class="sns-icons">
+                    <a href="#" class="sns-link" aria-label="Phone"><svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                        </svg></a>
+                    <a href="#" class="sns-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.4 5.6 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.6 18.4 4 16.4 4H7.6m4.4 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4m5.25-1.75a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Z" />
+                        </svg></a>
+                    <a href="#" class="sns-link" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.52 0 10-4.48 10-10S17.52 2 12 2zm3.11 10.3h-1.92v6.62h-2.75v-6.62H9.2v-2.33h1.24V8.46c0-1.02.48-2.6 2.6-2.6h1.9v2.26h-1.37c-.24 0-.6.12-.6.65v1.2H15.1l-.22 2.33z" />
+                        </svg></a>
+                    <a href="#" class="sns-link" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.08 3.81-.24 4.87-.16 1.06-.61 1.51-1.35 1.51-1.07.1-3.41.15-7.03.15H12c-4.41 0-6.93-.05-7.58-.15-.74 0-1.19-.45-1.35-1.51C2.91 15.81 2.83 14.19 2.83 12c0-2.19.08-3.81.24-4.87.16-1.06.61-1.51 1.35-1.51 1.07-.1 3.41-.15 7.03-.15h1.38c3.62 0 5.96.05 7.03.15.74 0 1.19.45 1.35 1.51z" />
+                        </svg></a>
+                    <a href="#" class="sns-link" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top 버튼 (요청된 애니메이션 탑재) -->
+        <button class="btn-top" aria-label="Go to top">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+        </button>
+    </footer>
+
+    <!-- GSAP 스크립트 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            // 헤더 스크롤 색상 변경
+            const header = document.querySelector('.site-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // 2. GSAP 코어 메시지 스크롤 애니메이션 (스크롤 연동 방식)
+            gsap.registerPlugin(ScrollTrigger);
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".core-message-section",
+                    start: "top 85%", // 섹션 상단이 화면 아래 85% 지점에 나타날 때 시작
+                    end: "top 30%", // 섹션 상단이 화면 30% 지점까지 올라올 때 애니메이션 완료
+                    scrub: 1.5, // 스크롤 바를 내리고 올릴 때 실시간으로 반응 (1.5는 부드럽게 따라오는 지연 시간)
+                }
+            });
+
+            // (1) 배경 띠가 스크롤에 맞춰 늘어나거나 줄어듦
+            tl.to(".bg-bar-shape", {
+                scaleX: 1,
+                duration: 1,
+                ease: "none", // 스크럽일 때는 ease:none 이 자연스럽습니다
+                stagger: 0.2
+            })
+                // (2) 텍스트 역시 스크롤 위치에 비례하여 서서히 등장
+                .to(".text-inner", {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "none",
+                    stagger: 0.2
+                }, "<") // 띠 애니메이션과 완전히 동시에 시작
+                // (3) 스크롤 완료 지점에서 포인트 텍스트 반짝임 효과
+                .to(".point-text", {
+                    textShadow: "0 0 25px rgba(255, 42, 109, 0.8), 0 0 45px rgba(255, 42, 109, 0.4)",
+                    duration: 0.3,
+                    ease: "none"
+                })
+                .to(".point-text", {
+                    textShadow: "none",
+                    duration: 0.3,
+                    ease: "none"
+                });
+
+            // 3. 이미지 크로스페이드 캐러셀 스크립트
+            const slides = document.querySelectorAll('.carousel-slide');
+            const btnLeft = document.querySelector('.click-left');
+            const btnRight = document.querySelector('.click-right');
+            let currentSlide = 0;
+
+            function goToSlide(index) {
+                slides[currentSlide].classList.remove('active');
+                // 배열 인덱스 순환 처리 (0 -> 2 -> 1)
+                currentSlide = (index + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+
+            // 왼쪽 1/3 영역 클릭 시 이전 이미지로
+            btnLeft.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+            });
+
+            // 오른쪽 1/3 영역 클릭 시 다음 이미지로
+            btnRight.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+
+            // 4. 파이프라인 인벤토리: 마우스 휠(수직 스크롤)을 가로 스크롤로 완벽하게 변환 (GSAP Pin)
+            // 억지로 타이틀을 고정하던 이전 방식과 다르게 화면 전체를 깔끔하게 Pin하고 이미지들만 슬라이드 시킵니다.
+            const pipelineSection = document.querySelector('.pipeline-section');
+            const pipelineWrapper = document.querySelector('.pipeline-wrapper');
+
+            if (pipelineSection && pipelineWrapper) {
+                // 가로로 얼마만큼 이동해야 끝에 도달하는지 계산하는 함수
+                function getScrollAmount() {
+                    let wrapperWidth = pipelineWrapper.scrollWidth;
+                    return -(wrapperWidth - window.innerWidth);
+                }
+
+                // GSAP 애니메이션: x축으로 계산된 양만큼 이동
+                const horizontalTween = gsap.to(pipelineWrapper, {
+                    x: () => getScrollAmount(),
+                    ease: "none"
+                });
+
+                // ScrollTrigger 생성
+                ScrollTrigger.create({
+                    trigger: pipelineSection,
+                    start: "top top", // 섹션 상단이 화면 최상단에 닿을 때 고정 시작
+                    end: () => `+=${getScrollAmount() * -1}`, // 이동해야 할 가로 길이만큼 수직 스크롤 길이 확보
+                    pin: true, // 화면 고정
+                    animation: horizontalTween,
+                    scrub: 1, // 마우스 휠을 굴릴 때 부드럽게 연동
+                    invalidateOnRefresh: true
+                });
+
+                // 폰트나 이미지가 뒤늦게 렌더링될 수 있으므로 약간의 지연 후 리프레시
+                setTimeout(() => ScrollTrigger.refresh(), 500);
+            }
+
+            // 5. 성과 및 IR/공시 애니메이션 (Frame 10)
+            const irLine = document.querySelector(".chart-line");
+            if (irLine) {
+                const lineLength = irLine.getTotalLength();
+                // 꺾은선 그래프 초기 상태 (선 감추기)
+                gsap.set(irLine, { strokeDasharray: lineLength, strokeDashoffset: lineLength });
+
+                ScrollTrigger.create({
+                    trigger: ".ir-section",
+                    start: "top 75%", // 화면의 75% 지점에 닿았을 때 모션 시작
+                    onEnter: () => {
+                        // 1) 숫자 카운트업 (0 -> 15)
+                        gsap.to(".count-num", {
+                            innerText: 15,
+                            duration: 2,
+                            snap: { innerText: 1 }, // 정수로 변경
+                            ease: "power2.out"
+                        });
+
+                        // 2) 꺾은선 그래프 그리기 (왼쪽 -> 오른쪽)
+                        gsap.to(irLine, {
+                            strokeDashoffset: 0,
+                            duration: 1.5,
+                            ease: "power3.out"
+                        });
+
+                        // 3) 그라데이션 차오르기 (아래 -> 위)
+                        gsap.to(".gradient-clip", {
+                            attr: { y: 0, height: 200 },
+                            duration: 1.5,
+                            ease: "power2.out",
+                            delay: 0.3 // 꺾은선보다 살짝 늦게 차오름
+                        });
+                    },
+                    once: true // 스크롤을 내릴 때 한 번만 발생
+                });
+            }
+
+            // 6. Top 버튼 등장 및 상단 스크롤 기능
+            const btnTop = document.querySelector('.btn-top');
+
+            if (btnTop) {
+                // 스크롤 감지 이벤트
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 400) {
+                        btnTop.classList.add('visible');
+                    } else {
+                        btnTop.classList.remove('visible');
+                    }
+                });
+
+                // 클릭 시 최상단으로 이동
+                btnTop.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

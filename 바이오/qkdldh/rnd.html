@@ -1,0 +1,1106 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R&D | Oscotec Inc.</title>
+    <!-- Web Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+    <style>
+        /* 
+         ========================================
+         Base & Reset
+         ========================================
+        */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            animation: pageFadeIn 0.6s ease-out forwards; 
+            font-family: 'Pretendard Variable', Pretendard, -apple-system, sans-serif; 
+            background: #000000; /* 딥 퍼플 배경 */
+            color: #ffffff; 
+            line-height: 1.6;
+        }
+        
+        /* 
+         ========================================
+         1. 상단 GNB (Header) 영역
+         ========================================
+        */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            z-index: 1000;
+            background-color: transparent;
+            transition: background-color 0.4s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .site-header.scrolled,
+        .site-header:hover {
+            background-color: rgba(0, 0, 0, 0.85);
+            border-bottom-color: transparent;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            height: 100%;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .logo-symbol {
+            font-weight: 900;
+            font-style: italic;
+            font-size: 28px;
+            letter-spacing: -1px;
+        }
+
+        .logo-divider {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            font-size: 20px;
+            margin: 0 4px;
+        }
+
+        .gnb ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .gnb a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            padding: 10px 0;
+            transition: color 0.3s ease;
+        }
+
+        .gnb a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background-color: #ffffff;
+            transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .gnb a:hover { color: #e0e0e0; }
+        .gnb a:hover::after { width: 100%; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+            transition: 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* 
+         ========================================
+         1. 상단 히어로 섹션 (Hero Area)
+         ========================================
+        */
+        .rnd-hero {
+            padding: 0 20px;
+            background-color: #000000;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* 배경 이미지 넘침 방지 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 650px;
+        }
+        .rnd-hero h1 {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: 12px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            /* 은은한 빛 번짐 효과 */
+            text-shadow: 0 0 40px rgba(255, 42, 109, 0.3);
+        }
+        .rnd-hero p {
+            font-size: 20px;
+            font-weight: 300;
+            color: #bfaec9; /* 연보라빛 회색 */
+            letter-spacing: 0.5px;
+        }
+
+        /* 
+         ========================================
+         LNB (Local Navigation Bar)
+         ========================================
+        */
+        .rnd-lnb {
+            position: sticky;
+            top: 90px; /* Header height */
+            z-index: 900;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .rnd-lnb ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .rnd-lnb li {
+            flex: 1;
+            text-align: center;
+        }
+        .rnd-lnb a {
+            display: block;
+            padding: 20px 0;
+            color: #666666;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            letter-spacing: 1px;
+        }
+        .rnd-lnb a:hover, .rnd-lnb a.active {
+            color: #111111;
+        }
+        .rnd-lnb a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 3px;
+            background: #833b5c;
+        }
+
+        /* 
+         ========================================
+         2. 연구소 소개 (Introduction)
+         ========================================
+        */
+        .intro-section {
+            padding: 0 50px 120px;
+            background: #ffffff;
+            text-align: center;
+        }
+        .intro-header h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #111111;
+            letter-spacing: 1px;
+        }
+        .intro-header p {
+            font-size: 20px;
+            color: #666666;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        .intro-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .stat-box {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            border-radius: 16px;
+            padding: 40px 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            border-color: rgba(131, 59, 92, 0.3);
+        }
+        .stat-num-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            color: #833b5c;
+            margin-bottom: 15px;
+        }
+        .stat-num {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .stat-unit {
+            font-size: 32px;
+            font-weight: 700;
+            margin-left: 5px;
+        }
+        .stat-box p {
+            font-size: 16px;
+            color: #666666;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* 
+         ========================================
+         3. 연구 분야 (Research Areas)
+         ========================================
+        */
+        .areas-section {
+            padding: 0 50px 120px;
+            background: #f8f9fa;
+        }
+        .area-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        .area-card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            border-radius: 20px;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .area-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #833b5c;
+        }
+        .area-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            border-color: rgba(131, 59, 92, 0.3);
+        }
+        .area-content {
+            flex: 1;
+        }
+        .area-content h3 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #111111;
+        }
+        .area-content h3 span {
+            font-size: 20px;
+            color: #833b5c;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .area-content h4 {
+            font-size: 22px;
+            color: #555555;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .area-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #666666;
+            word-break: keep-all;
+        }
+        
+        /* 
+         ========================================
+         4. 연구 기술 (Core Technologies)
+         ========================================
+        */
+        .tech-section {
+            padding: 120px 50px 0; /* 파이프라인과 이어지게 하단 패딩 제거 */
+            background: #ffffff;
+        }
+        .tech-intro {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            text-align: center;
+        }
+        .tech-intro h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #111111;
+        }
+        .tech-intro p {
+            font-size: 18px;
+            color: #666666;
+            line-height: 1.8;
+        }
+
+        /* 
+         ========================================
+         5. 파이프라인 타임라인 테이블 (Pipeline Status)
+         ========================================
+        */
+        .pipeline-status {
+            padding: 80px 50px 120px; /* tech-section 밑에 붙게 상단 여백 조절 */
+            background: #ffffff; /* 연결감을 위해 배경색 맞춤 */
+        }
+        
+        .table-scroll-wrap {
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            /* 커스텀 스크롤바 (Webkit) */
+            scrollbar-width: thin;
+            scrollbar-color: #833b5c #f0f0f0;
+        }
+        .table-scroll-wrap::-webkit-scrollbar {
+            height: 8px;
+        }
+        .table-scroll-wrap::-webkit-scrollbar-track {
+            background: #f0f0f0; 
+            border-radius: 4px;
+        }
+        .table-scroll-wrap::-webkit-scrollbar-thumb {
+            background: #833b5c; 
+            border-radius: 4px;
+        }
+
+        .pipeline-grid {
+            width: 100%;
+            min-width: 1100px; /* 모바일 가로 스크롤 보장 */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Grid Column 매칭 트릭 (2:2:5 비율 -> 2:2:1:1:1:1:1 비율) */
+        .pg-header {
+            display: grid;
+            grid-template-columns: 2.5fr 2fr 1fr 1fr 1fr 1fr 1fr;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+            background: #f8f9fa;
+            border-radius: 12px 12px 0 0;
+        }
+        .pg-row {
+            display: grid;
+            grid-template-columns: 2.5fr 2fr 5fr; /* 5fr은 5개의 1fr을 포괄 */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background 0.3s;
+        }
+        .pg-row:hover {
+            background: #fdfdfd;
+        }
+        
+        .pg-col {
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pg-header .pg-col {
+            font-size: 14px;
+            color: #666666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .pg-header .phase {
+            justify-content: center;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .compound { font-weight: 800; color: #111111; font-size: 18px; }
+        .target { color: #555555; font-size: 15px; }
+
+        /* 바 그래프 컨테이너 */
+        .pg-bar-container {
+            position: relative;
+            padding: 0; /* 내부 꽉 차게 */
+        }
+        
+        /* 배경 트랙 (5등분 구분선) */
+        .pg-track {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 16px;
+            transform: translateY(-50%);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+        .pg-step {
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .pg-step:last-child { border-right: none; }
+        
+        /* 진행률 바 (핑크~연보라 그라데이션) */
+        .pg-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 16px;
+            transform: translateY(-50%);
+            /* 포인트 핑크/연보라 선형 그라데이션 */
+            background: linear-gradient(90deg, #dcd4e2 0%, #9b82a5 100%);
+            border-radius: 8px;
+            box-shadow: none;
+            
+            /* 로딩 시 0부터 차오르는 애니메이션을 위해 0으로 시작 */
+            width: 0; 
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+
+        /* 
+         ========================================
+         8. Footer 푸터 섹션 (이미지 완벽 매칭)
+         ========================================
+        */
+        .footer {
+            background-color: #f0f0f0; /* 밝은 회색 배경 */
+            color: #333;
+            padding: 80px 0;
+            font-family: 'Pretendard Variable', Pretendard, sans-serif;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            padding: 0 50px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        /* 1. 좌측: 로고 영역 */
+        .footer-logo {
+            flex: 1;
+            font-size: 40px;
+            font-weight: 700;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo .oct-logo {
+            color: #d3222a; /* 시안 로고 레드 */
+            font-weight: 900;
+            letter-spacing: -2px;
+            display: flex;
+            position: relative;
+        }
+
+        .footer-logo .oct-logo .c-char {
+            position: relative;
+        }
+        .footer-logo .oct-logo .c-char::before,
+        .footer-logo .oct-logo .c-char::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            width: 5px;
+            height: 5px;
+            background-color: #d3222a;
+            border-radius: 50%;
+        }
+        .footer-logo .oct-logo .c-char::before { left: 4px; }
+        .footer-logo .oct-logo .c-char::after { right: 2px; }
+
+        .footer-logo .logo-divider {
+            color: #a0a0a0;
+            font-weight: 300;
+            margin: 0 5px;
+        }
+
+        /* 2. 중앙: 정보 영역 */
+        .footer-info {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 10px;
+        }
+
+        .footer-info h2 {
+            font-size: 26px;
+            font-weight: 900;
+            color: #111;
+            margin: 0 0 10px 0;
+        }
+
+        .address-box p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+        }
+
+        .policy-link {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            display: flex;
+            align-items: center;
+        }
+
+        .policy-link .bullet {
+            margin-right: 8px;
+            font-size: 12px;
+        }
+
+        /* Wipe 효과 유지 */
+        .wipe-link {
+            position: relative;
+            color: #111;
+            text-decoration: none;
+            padding-bottom: 2px;
+            transition: color 0.3s ease;
+        }
+        .wipe-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #ff2a6d;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .wipe-link:hover { color: #ff2a6d; }
+        .wipe-link:hover::after { transform: scaleX(1); }
+
+        /* 3. 우측: 고객센터 영역 */
+        .footer-customer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-top: 10px;
+        }
+
+        .footer-customer h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111;
+            margin: 0 0 5px 0;
+            letter-spacing: 0.02em;
+        }
+
+        .footer-customer p {
+            font-size: 15px;
+            color: #555;
+            margin: 0 0 20px 0;
+        }
+
+        .customer-line {
+            width: 100%;
+            height: 1px;
+            background-color: #111;
+            border: none;
+            margin: 0 0 20px 0;
+        }
+
+        .sns-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .sns-link {
+            color: #111;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .sns-link svg { width: 100%; height: 100%; }
+        .sns-link:hover { transform: scale(1.15) rotate(8deg); color: #0077b5; }
+
+        /* Top 버튼 */
+        .btn-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 52px;
+            height: 52px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s;
+            z-index: 99;
+        }
+        .btn-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .btn-top:hover { animation: bounceTop 0.8s infinite ease-in-out; background: #ff2a6d; }
+        @keyframes bounceTop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+        /* 
+         ========================================
+         Media Queries
+         ========================================
+        */
+        @media (max-width: 1024px) {
+            .intro-stats { flex-direction: column; gap: 20px; }
+            .rnd-hero h1 { font-size: 48px; letter-spacing: 8px; }
+            .footer-inner { flex-direction: column; gap: 60px; }
+            .footer-info { padding-top: 0; }
+            .btn-top { bottom: 20px; right: 20px; }
+        }
+        @media (max-width: 768px) {
+            .rnd-hero { padding: 180px 20px 80px; }
+            .rnd-hero h1 { font-size: 32px; letter-spacing: 4px; }
+            .rnd-hero p { font-size: 16px; }
+            
+            .rnd-lnb a { font-size: 15px; padding: 15px 0; }
+            .intro-header h2 { font-size: 32px; }
+            .stat-num { font-size: 40px; }
+            .area-card { flex-direction: column; padding: 40px 30px; }
+            
+            .section-title { font-size: 32px; margin-bottom: 40px; }
+            
+            .achieve-list li a { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .achieve-arrow { align-self: flex-end; }
+            .footer-logo { font-size: 32px; }
+            .footer-inner { padding: 0 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 상단 GNB 헤더 -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="#"><span class="logo-symbol">Oct</span><span class="logo-divider">|</span><span class="logo-text">Oscotec Inc.</span></a>
+            </div>
+            <nav class="gnb">
+                <ul>
+                    <li><a href="index.html">ABOUT</a></li>
+                    <li><a href="#">BUSINESS</a></li>
+                    <li><a href="#">PIPELINE</a></li>
+                    <li><a href="#">R&D</a></li>
+                    <li><a href="#">TECHNOLOGY</a></li>
+                    <li><a href="#">PARTNERSHIP</a></li>
+                    <li><a href="#">IR</a></li>
+                    <li><a href="#">PRESS</a></li>
+                    <li><a href="#">CAREER</a></li>
+                </ul>
+            </nav>
+            <button class="hamburger" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- 1. 상단 히어로 섹션 -->
+    <section class="rnd-hero">
+        <!-- 배경 이미지 -->
+        <img src="Frame 12.png" alt="R&D Hero Background" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; z-index: 1;">
+        <!-- 어두운 오버레이 (텍스트 가독성을 위해) -->
+        <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.65); z-index: 2;"></div>
+        
+        <div style="position: relative; z-index: 3;">
+            <h1>RESEARCH & DEVELOPMENT</h1>
+            <p>혁신적인 플랫폼 기술을 바탕으로 난치성 질환의 근본적 치료에 도전합니다.</p>
+        </div>
+    </section>
+
+    <!-- LNB (Sticky 탭 네비게이션) -->
+    <nav class="rnd-lnb">
+        <ul>
+            <li><a href="#intro" class="active">연구소 소개</a></li>
+            <li><a href="#areas">연구 분야</a></li>
+            <li><a href="#tech">연구 기술</a></li>
+        </ul>
+    </nav>
+
+    <!-- 2. 연구소 소개 (Introduction) -->
+    <section id="intro" class="rnd-section intro-section">
+        <div class="intro-header">
+            <h2>Targeting the Root, Healing the Life</h2>
+            <p>근본을 표적하여 생명을 치유합니다.<br>오스코텍 연구소는 질병의 표적 단백질을 정밀하게 타격하는 혁신 신약을 설계하여, 난치성 질환 환자들에게 새로운 내일을 선사합니다.</p>
+        </div>
+        <div class="intro-stats">
+            <div class="stat-box">
+                <div class="stat-num-wrap"><div class="stat-num" data-target="80">0</div><span class="stat-unit">%</span></div>
+                <p>전체 임직원 중<br>R&D 인력 비율</p>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num-wrap"><div class="stat-num" data-target="2">0</div><span class="stat-unit">개</span></div>
+                <p>글로벌 R&D 거점<br>(판교 & 보스턴 Genosco)</p>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num-wrap"><div class="stat-num" data-target="15">0</div><span class="stat-unit">+</span></div>
+                <p>글로벌 파트너십 및<br>오픈 이노베이션</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 연구 분야 (Research Areas) -->
+    <section id="areas" class="rnd-section areas-section">
+        <h2 class="section-title"></h2>
+        <div class="area-cards">
+            <!-- Oncology -->
+            <div class="area-card oncology">
+                <div class="area-content">
+                    <h3>Oncology <span>종양학 / 항암제</span></h3>
+                    <h4>"암세포의 증식 신호만을 선택적으로 차단합니다."</h4>
+                    <p>정상 세포의 손상은 최소화하고 암세포의 돌연변이 단백질만을 정밀 타격하는 표적항암제를 연구합니다. 비소세포폐암, 급성골수성백혈병 등 의학적 미충족 수요가 높은 난치암의 근본적인 치료 대안을 제시하여 환자의 내일을 바꿉니다.</p>
+                </div>
+            </div>
+            <!-- Immunology -->
+            <div class="area-card immunology">
+                <div class="area-content">
+                    <h3>Immunology <span>면역질환</span></h3>
+                    <h4>"무너진 면역 체계의 균형을 되찾습니다."</h4>
+                    <p>자가면역질환 및 염증성 질환의 핵심 발병 경로를 조절하는 계열 내 최고(Best-in-Class) 신약을 연구합니다. 류마티스 관절염, 면역성 혈소판 감소증 등 환자의 삶의 질을 위협하는 질환을 표적하여 건강한 일상을 되찾아 줍니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 연구 기술 (Core Technologies) -->
+    <section id="tech" class="rnd-section tech-section">
+        <h2 class="section-title"></h2>
+        
+        <div class="tech-intro">
+            <h3></h3>
+            <p></p>
+        </div>
+    </section>
+
+    <!-- 5. 파이프라인 타임라인 테이블 (가장 중요) -->
+    <section class="pipeline-status">
+        <h2 class="section-title"></h2>
+        <div class="table-scroll-wrap">
+            <div class="pipeline-grid">
+                
+                <!-- 테이블 헤더 -->
+                <div class="pg-header">
+                    <div class="pg-col compound">물질명</div>
+                    <div class="pg-col target">타겟 질환</div>
+                    <div class="pg-col phase">연구<br>Discovery</div>
+                    <div class="pg-col phase">전임상<br>Pre-clinical</div>
+                    <div class="pg-col phase">임상 1상<br>Phase 1</div>
+                    <div class="pg-col phase">임상 2상<br>Phase 2</div>
+                    <div class="pg-col phase">임상 3상<br>Phase 3</div>
+                </div>
+                
+                <!-- Pipeline Item 1 -->
+                <div class="pg-row">
+                    <div class="pg-col compound">Lazertinib (Leclaza)</div>
+                    <div class="pg-col target">NSCLC (비소세포폐암)</div>
+                    <div class="pg-col pg-bar-container">
+                        <div class="pg-track">
+                            <div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div>
+                        </div>
+                        <!-- Phase 3 완료 (100%) -->
+                        <div class="pg-bar" data-width="100%"></div>
+                    </div>
+                </div>
+                
+                <!-- Pipeline Item 2 -->
+                <div class="pg-row">
+                    <div class="pg-col compound">Cevidoplenib</div>
+                    <div class="pg-col target">ITP (면역성 혈소판 감소증)</div>
+                    <div class="pg-col pg-bar-container">
+                        <div class="pg-track">
+                            <div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div>
+                        </div>
+                        <!-- Phase 2 진행 중 (대략 70%) -->
+                        <div class="pg-bar" data-width="70%"></div>
+                    </div>
+                </div>
+
+                <!-- Pipeline Item 3 -->
+                <div class="pg-row">
+                    <div class="pg-col compound">SKI-O-703</div>
+                    <div class="pg-col target">RA (류마티스 관절염)</div>
+                    <div class="pg-col pg-bar-container">
+                        <div class="pg-track">
+                            <div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div>
+                        </div>
+                        <!-- Phase 1 (대략 50%) -->
+                        <div class="pg-bar" data-width="50%"></div>
+                    </div>
+                </div>
+                
+                <!-- Pipeline Item 4 -->
+                <div class="pg-row">
+                    <div class="pg-col compound">SKI-G-801</div>
+                    <div class="pg-col target">FLT3 Mutated AML</div>
+                    <div class="pg-col pg-bar-container">
+                        <div class="pg-track">
+                            <div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div>
+                        </div>
+                        <!-- Pre-clinical (대략 30%) -->
+                        <div class="pg-bar" data-width="30%"></div>
+                    </div>
+                </div>
+                
+                <!-- Pipeline Item 5 -->
+                <div class="pg-row">
+                    <div class="pg-col compound">OCT-201</div>
+                    <div class="pg-col target">알츠하이머 병 (AD)</div>
+                    <div class="pg-col pg-bar-container">
+                        <div class="pg-track">
+                            <div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div><div class="pg-step"></div>
+                        </div>
+                        <!-- Discovery (대략 10%) -->
+                        <div class="pg-bar" data-width="10%"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Footer (이미지 완벽 매칭) -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <!-- 1. 좌측: 로고 영역 -->
+            <div class="footer-logo">
+                <span class="oct-logo">O<span class="c-char">c</span>t</span> 
+                <span class="logo-divider">|</span> 
+                <span>Oscotec Inc.</span>
+            </div>
+            
+            <!-- 2. 중앙: 기업 정보 영역 -->
+            <div class="footer-info">
+                <h2>오스코텍</h2>
+                <div class="address-box">
+                    <p>경기도 성남시 분당구 대왕판교로 700(삼평동)<br>코리아바이오파크 A동 9층</p>
+                    <p>대표 : 윤태영, 이상현 / 사업자등록번호 : 312-81-32175</p>
+                </div>
+                <div class="policy-link">
+                    <span class="bullet">•</span> <a href="#" class="wipe-link">개인정보처리방침 안내</a>
+                </div>
+            </div>
+            
+            <!-- 3. 우측: 고객센터 영역 -->
+            <div class="footer-customer">
+                <h3>CUSTOMER CENTER</h3>
+                <p>메일주시면 확인 후 회신드립니다</p>
+                <hr class="customer-line">
+                <div class="sns-icons">
+                    <a href="#" class="sns-link" aria-label="Phone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a>
+                    <a href="#" class="sns-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.4 5.6 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.6 18.4 4 16.4 4H7.6m4.4 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4m5.25-1.75a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Z"/></svg></a>
+                    <a href="#" class="sns-link" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.52 0 10-4.48 10-10S17.52 2 12 2zm3.11 10.3h-1.92v6.62h-2.75v-6.62H9.2v-2.33h1.24V8.46c0-1.02.48-2.6 2.6-2.6h1.9v2.26h-1.37c-.24 0-.6.12-.6.65v1.2H15.1l-.22 2.33z"/></svg></a>
+                    <a href="#" class="sns-link" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.08 3.81-.24 4.87-.16 1.06-.61 1.51-1.35 1.51-1.07.1-3.41.15-7.03.15H12c-4.41 0-6.93-.05-7.58-.15-.74 0-1.19-.45-1.35-1.51C2.91 15.81 2.83 14.19 2.83 12c0-2.19.08-3.81.24-4.87.16-1.06.61-1.51 1.35-1.51 1.07-.1 3.41-.15 7.03-.15h1.38c3.62 0 5.96.05 7.03.15.74 0 1.19.45 1.35 1.51z"/></svg></a>
+                    <a href="#" class="sns-link" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top 버튼 (요청된 애니메이션 탑재) -->
+        <button class="btn-top" aria-label="Go to top">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19V5M5 12l7-7 7 7"/>
+            </svg>
+        </button>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 헤더 스크롤 색상 변경
+            const header = document.querySelector('.site-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // 스무스 스크롤 (LNB 탭 클릭 시)
+            const lnbLinks = document.querySelectorAll('.rnd-lnb a');
+            lnbLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        const offsetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - 150; // Sticky LNB 높이 고려
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // 스크롤 스파이 (화면 스크롤에 따라 LNB 활성화 변경)
+            const sections = document.querySelectorAll('.rnd-section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // LNB 높이와 헤더 높이 여유분 고려
+                    if (pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                lnbLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // 숫자 카운팅 애니메이션 (연구소 소개)
+            const statNums = document.querySelectorAll('.stat-num');
+            let hasCounted = false;
+
+            const countObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasCounted) {
+                        hasCounted = true;
+                        statNums.forEach(num => {
+                            const target = +num.getAttribute('data-target');
+                            const duration = 2000;
+                            const increment = target / (duration / 16);
+                            let current = 0;
+
+                            const updateCount = () => {
+                                current += increment;
+                                if (current < target) {
+                                    num.innerText = Math.ceil(current);
+                                    requestAnimationFrame(updateCount);
+                                } else {
+                                    num.innerText = target;
+                                }
+                            };
+                            updateCount();
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            const introSection = document.querySelector('.intro-section');
+            if (introSection) {
+                countObserver.observe(introSection);
+            }
+
+            // 파이프라인 그래프 바 애니메이션 (스크롤 도달 시 차오르는 효과)
+            const bars = document.querySelectorAll('.pg-bar');
+            
+            // Intersection Observer를 사용하여 화면에 보일 때 애니메이션 실행
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bar = entry.target;
+                        const targetWidth = bar.getAttribute('data-width');
+                        // setTimeout을 주어 자연스럽게 트랜지션 발동
+                        setTimeout(() => {
+                            bar.style.width = targetWidth;
+                        }, 200);
+                        observer.unobserve(bar); // 한 번 실행 후 해제
+                    }
+                });
+            }, { threshold: 0.1 }); // 10% 정도 화면에 들어왔을 때
+
+            bars.forEach(bar => {
+                observer.observe(bar);
+            });
+
+            // Top 버튼 등장 및 상단 스크롤 기능
+            const btnTop = document.querySelector('.btn-top');
+
+            if (btnTop) {
+                // 스크롤 감지 이벤트
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 400) {
+                        btnTop.classList.add('visible');
+                    } else {
+                        btnTop.classList.remove('visible');
+                    }
+                });
+
+                // 클릭 시 최상단으로 이동
+                btnTop.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
